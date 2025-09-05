@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-env --allow-read --allow-ffi --unstable-raw-imports markdown.js"
+  },
+  "imports": {
+    "@webview/webview": "jsr:@webview/webview@^0.9.0",
+    "marked": "npm:marked@^16.2.1"
+  }
+}
