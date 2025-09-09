@@ -1,6 +1,11 @@
 import { Webview } from "@webview/webview";
 import { marked } from 'marked';
+import { helpCommand } from "./utils.ts";
 import prompt from './prompt.md' with { type: 'text' };
+
+if (Deno.args.includes("--help") || Deno.args.includes("-h")) {
+  helpCommand();
+}
 
 const rendered = marked.parse(prompt);
 
