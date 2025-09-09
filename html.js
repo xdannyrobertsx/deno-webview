@@ -1,14 +1,21 @@
 import { Webview } from "@webview/webview";
-import { marked } from 'marked';
 import { helpCommand } from "./utils.ts";
-import markdown from './README.md' with { type: 'text' };
 
 if (Deno.args.includes("--help") || Deno.args.includes("-h")) {
   helpCommand();
 }
 
-const rendered = marked.parse(markdown);
+const command = new Deno.Command("curl", {
+  args: ["-L", "https://www.ilyameerovich.com/closed-systems-of-thinking/"],
+});
+const { success, stdout } = await command.output();
 
+if (!success) {
+  console.error("Failed to run command");
+  Deno.exit(1);
+}
+
+const rendered = new TextDecoder().decode(stdout);
 const webview = new Webview();
 const endcoded = encodeURIComponent(rendered);
 const webviewUrl = `data:text/html,${endcoded}`;
